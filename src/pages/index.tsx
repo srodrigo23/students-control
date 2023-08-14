@@ -4,6 +4,7 @@ import Head from "next/head";
 import Link from "next/link";
 import { api } from "~/utils/api";
 import { useRouter } from 'next/navigation'
+import FormGradesQuery from "~/components/FormGradesQuery";
 
 const Home: NextPage = () => {
   const hello = api.example.hello.useQuery({ text: "from tRPC" });
@@ -20,13 +21,15 @@ const Home: NextPage = () => {
         <div 
           className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c]"
         >
-          <h1 className="text-4xl text-white">Control de Estudiantes</h1>
-          <button 
+          <h1 className="text-4xl text-white">Computación 1</h1>
+          <h2 className="text-xl text-white">Invierno 2024</h2>
+          {/* <button 
             className="bg-indigo-500 border-white border-solid rounded-md text-white mt-5 pt-2 pb-2 pl-4 pr-4"
             onClick={()=>router.push('/addStudent')}
           >
             Ingresar
-          </button>
+          </button> */}
+          <FormGradesQuery/>
         </div>
       
       /* <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c]">
