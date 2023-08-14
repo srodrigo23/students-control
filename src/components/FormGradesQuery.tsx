@@ -24,7 +24,7 @@ const FormGradesQuery = ()=>{
     {/* /* "handleSubmit" will validate your inputs before invoking "onSubmit" */ }
     return(
         <div className="rounded boder-solid border-indigo-600 border-2 m-5 bg-white">
-            <>{userData[0].email}</>
+            <>{userData[0]?.email}</>
             <form className="p-5" onSubmit={handleSubmit(onSubmit)}>
                 <a>Nombres :</a>
                 <input className="rounded border-solid border-2"
