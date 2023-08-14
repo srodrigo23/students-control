@@ -25,7 +25,9 @@ const FormGradesQuery = ()=>{
     return(
         <div className="rounded boder-solid border-indigo-600 border-2 m-5 bg-white">
             <>{userData[0]?.email}</>
-            <form className="p-5" onSubmit={handleSubmit(onSubmit)}>
+            <form className="p-5" 
+            // onSubmit={handleSubmit(onSubmit)}
+            >
                 <a>Nombres :</a>
                 <input className="rounded border-solid border-2"
                     defaultValue="" {...register("name", { required: true })} />
