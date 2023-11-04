@@ -17,24 +17,21 @@ const FormAddStudent = ()=>{
     return(
         <>
             {/* /* "handleSubmit" will validate your inputs before invoking "onSubmit" */ }
-            <div
-                className="rounded boder-solid border-indigo-600 border-2 m-5"
-            >
+            <div className="rounded boder-solid border-2 bg-white w-2/6">
                 
-                <form 
-                    className="grid grid-flow-column-dense grid-cols-3 p-5"
+                <form className="grid grid-cols-1 p-7"
                     // onSubmit={handleSubmit(onSubmit)}
                 >                
                     <a className="col-span-1">Nombres :</a>
                     <input 
-                        className="col-span-2 rounded border-solid border-2"
+                        className="col-span-1 rounded border-solid border-2"
                         defaultValue="" {...register("name", { required: true })} />
                     { errors.name && <span>This field is required</span> }
                     {/* include validation with required or other standard HTML validation rules */}
                     <br/>
                     <a className="col-span-1">Apellidos :</a>
                     <input 
-                        className="col-span-2 rounded border-solid border-2"
+                        className="col-span-1 rounded border-solid border-2"
                         defaultValue="" {...register("lastname", { required: true })} />
                     { errors.name && <span>This field is required</span> }
                     <br/>
