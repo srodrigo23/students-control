@@ -2,7 +2,6 @@ import {type NextPage} from "next"
 import FormAddStudent from "~/components/FormAddStudent";
 
 
-
 const AddStudent: NextPage = () =>{
     return(
         <> 

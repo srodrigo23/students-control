@@ -13,18 +13,19 @@ type Inputs = {
 const FormGradesQuery = ()=>{
 
     const { data: userData }  = api.user.getAll.useQuery();
-    
-
     const { register, handleSubmit, watch, formState: { errors } } = useForm<Inputs>();
     const onSubmit: SubmitHandler<Inputs> = data => console.log(data);
 
     const classRed = "text-red-400"
 
-    if (!userData) return <p>Loading...</p>;
+    // if (!userData) return <p>Loading...</p>;
+
     {/* /* "handleSubmit" will validate your inputs before invoking "onSubmit" */ }
     return(
-        <div className="rounded boder-solid border-indigo-600 border-2 m-5 bg-white">
-            <>{userData[0]?.email}</>
+        <div 
+            className="rounded boder-solid border-indigo-600 border-2 m-5 bg-white"
+        >
+            {userData? <>{userData[0]!.email}</>:<></>}
             <form className="p-5" 
             // onSubmit={handleSubmit(onSubmit)}
             >
