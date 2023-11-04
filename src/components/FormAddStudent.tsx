@@ -17,7 +17,7 @@ const FormAddStudent = ()=>{
     return(
         <>
             {/* /* "handleSubmit" will validate your inputs before invoking "onSubmit" */ }
-            <div className="rounded boder-solid border-2 bg-white w-2/6">      
+            <div className="rounded boder-solid border-2 bg-white md:w-2/6 sm:w-4/6">      
                 <form className="grid grid-cols-1 p-7"
                     // onSubmit={handleSubmit(onSubmit)}
                 >                
