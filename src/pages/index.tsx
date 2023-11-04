@@ -9,6 +9,7 @@ import FormGradesQuery from "~/components/FormGradesQuery";
 import Modal from '@mui/material/Modal';
 import AddStudent from "./addStudent";
 import FormAddStudent from "~/components/FormAddStudent";
+import StudentsTable from "~/components/StudentsTable";
 
 const Home: NextPage = () => {
   // const hello = api.example.hello.useQuery({ text: "from tRPC" });
@@ -41,7 +42,7 @@ const Home: NextPage = () => {
           </Modal>
 
 
-          
+          <StudentsTable/>          
         </div>
       
       /* <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c]">
