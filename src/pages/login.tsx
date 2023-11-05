@@ -10,7 +10,7 @@ const Login = () => {
             className="flex items-center justify-center h-screen dark:bg-gray-800">
             <div 
                 // className="flex items-center justify-center h-screen dark:bg-gray-800"
-                className="w-4/6 md:w-3/6 sm:w-2/6 bg-white px-6 pt-10 pb-8 shadow-xl ring-1 ring-gray-900/5 sm:rounded-xl sm:px-10">
+                className="w-full md:w-3/6 sm:w-2/6 m-3 rounded-xl bg-white px-6 pt-10 pb-8 shadow-xl ring-1 ring-gray-900/5 sm:rounded-xl sm:px-10">
                 <div className="text-center">
                     <h1 className="text-3xl font-semibold text-gray-900">Sign in</h1>
                     {/* <p className="mt-2 text-gray-500">Sign in below to access your account</p> */}
@@ -33,7 +33,7 @@ const Login = () => {
                         </div>
                         <div className="my-6">
                             
-                            <button type="submit" className=" flex items-center justify-center border border-slate-200 dark:border-slate-700 py-2  rounded-lg text-slate-700 dark:text-slate-200 hover:border-slate-400 dark:hover:border-slate-500 hover:text-slate-900 dark:hover:text-slate-300 hover:shadow transition duration-150 w-full bg-purple-200">
+                            <button type="submit" className=" flex items-center justify-center border border-slate-200 dark:border-slate-700 py-2  rounded-lg  text-slate-700 dark:text-slate-200 hover:border-slate-400 dark:hover:border-slate-500 hover:text-slate-900 dark:hover:text-slate-300 hover:shadow transition duration-150 w-full bg-cyan-200">
                                 <IconLogin className="mr-4"/>
                                 <span>Log In</span></button>
                         </div>
