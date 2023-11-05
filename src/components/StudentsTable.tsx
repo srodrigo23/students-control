@@ -95,13 +95,18 @@ const StudentsTable = ()=>{
   })
 
   return (
-    <div className="p-2">
-      <table>
+    <div 
+    className="h-full w-full overflow-scroll pl-4 pr-4"
+    >
+      <table className="w-full min-w-max table-auto text-left">
         <thead>
           {table.getHeaderGroups().map(headerGroup => (
             <tr key={headerGroup.id}>
               {headerGroup.headers.map(header => (
-                <th key={header.id}>
+                <th 
+                  key={header.id}
+                  className="border-b border-blue-gray-100 bg-blue-gray-50 p-4"
+                >
                   {header.isPlaceholder
                     ? null
                     : flexRender(
