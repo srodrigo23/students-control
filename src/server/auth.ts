@@ -6,6 +6,7 @@ import {
   type DefaultSession,
 } from "next-auth";
 import DiscordProvider from "next-auth/providers/discord";
+import GoogleProvider from 'next-auth/providers/google';
 import { env } from "~/env.mjs";
 import { prisma } from "~/server/db";
 
@@ -36,14 +37,46 @@ declare module "next-auth" {
  * @see https://next-auth.js.org/configuration/options
  */
 export const authOptions: NextAuthOptions = {
+  // callbacks: {
+  //   session: ({ session, user }) => ({
+  //     ...session,
+  //     user: {
+  //       ...session.user,
+  //       id: user.id,
+  //     },
+  //   }),
+  // },
   callbacks: {
-    session: ({ session, user }) => ({
-      ...session,
-      user: {
-        ...session.user,
-        id: user.id,
+    /*
+     * While using `jwt` as a strategy, `jwt()` callback will be called before
+     * the `session()` callback. So we have to add custom parameters in `token`
+     * via `jwt()` callback to make them accessible in the `session()` callback
+     */
+    
+      async session({ session, token, user }) {
+        session.jwt = token.jwt;
+        session.id = token.id;
+        return session;
       },
-    }),
+      async jwt({ token, user, account }) {
+        if (user) {
+          if (account.provider !== 'credentials') {
+            const response = await fetch(
+              `${env.NEXTAUTH_URL}/api/auth/${account.provider}/callback?access_token=${account?.access_token}`
+            );
+            const data = await response.json();
+  
+            token.jwt = data.jwt;
+            token.id = data.user.id;
+          } else {
+            token.jwt = user.jwt;
+            token.id = user.user.id;
+          }
+        }
+  
+        return token;
+    },
+
   },
   adapter: PrismaAdapter(prisma),
   providers: [
@@ -60,7 +93,37 @@ export const authOptions: NextAuthOptions = {
      *
      * @see https://next-auth.js.org/providers/github
      */
+    GoogleProvider({
+      clientId: env.GOOGLE_CLIENT_ID,
+      clientSecret: env.GOOGLE_CLIENT_SECRET,
+      // authorization: {
+      //   params: {
+      //     prompt: "consent",
+      //     access_type: "offline",
+      //     response_type: "code"
+      //   }
+      // }
+    })
   ],
+  session: {
+    /*
+     * Choose how you want to save the user session.
+     * The default is `jwt`, an encrypted JWT (JWE) stored in the session cookie.
+     * If you use an `adapter` however, NextAuth default it to `database` instead.
+     * You can still force a JWT session by explicitly defining `jwt`.
+     * When using `database`, the session cookie will only contain a `sessionToken` value,
+     * which is used to look up the session in the database.
+     */
+    strategy: 'jwt',
+
+    // ** Seconds - How long until an idle session expires and is no longer valid
+    maxAge: 30 * 24 * 60 * 60 // ** 30 days
+  },
+  pages: {
+    signIn: '/login',
+    signOut: '/login',
+    error: '/404'
+  },
 };
 
 /**
