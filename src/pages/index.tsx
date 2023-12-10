@@ -19,7 +19,7 @@ const Home: NextPage = () => {
   return (
     <div>
       <Head>
-        <title>My Platform</title>
+        <title>Students Control</title>
         <meta name="description" content="Students Control" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
