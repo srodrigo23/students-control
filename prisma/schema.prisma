@@ -74,12 +74,10 @@ model User {
 
   // Account Account[]
   // Session Session[]
-  Student Student?
+  student Student?
 }
 
 model Student {
-  codsis    Int
-  // ci        String
   id        Int      @id @default(autoincrement())
   userId    String   @unique
   codSis    String   @default("200000000")

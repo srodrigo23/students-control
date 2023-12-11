@@ -1,74 +1,74 @@
-import { PrismaClient } from '@prisma/client'
+import { Prisma, PrismaClient } from '@prisma/client'
 
-const prisma = new PrismaClient()
+// const prisma = new PrismaClient()
+const prisma = new PrismaClient({ log: ['query'] })
 
 async function main() {
+  const deleteUsers = prisma.user.deleteMany();
+  const deleteStudents = prisma.student.deleteMany();
 
-    const user = await prisma.user.upsert(
-        {
-          create:{
-              firstname:'Sergio Rodrigo',
-              lastname:'Cardenas Rivera',
-              ci : '5540408',
+  // The transaction runs synchronously so deleteUsers must run last.
+  await prisma.$transaction([deleteUsers, deleteStudents]);
 
-              Student: {
-                  [
-                      {
-                          codSis:'202012345'   
-                      }
-                  ]
-              }
+  // const another = await prisma.user.create({
+  //   data:{
+  //     firstname:'Sergio Rodrigo',
+  //     lastname:'Cardenas Rivera',
+  //     email:'rodrigosergio93@gmail.com',
+  //     ci : '5540408',
+  //     student:{
+  //       create:
+  //         {
+  //           // userId: "12345",
+  //           codSis: "201001616",
+  //         }
+  //     }
+  //   },
+  // })
+  // console.log({ another })
+
+  const users: Prisma.UserCreateInput[] = [
+    {
+      firstname:'Sergio Rodrigo',
+      lastname:'Cardenas Rivera',
+      email:'rodrigosergio93@gmail.com',
+      ci : '5540408',
+      student:{
+        create:
+          {
+            codSis: "201001616",
           }
-        }
-    )
-
-
-  const alice = await prisma.user.upsert({
-    where: { email: 'alice@prisma.io' },
-    update: {},
-    create: {
-      email: 'alice@prisma.io',
-      name: 'Alice',
-      posts: {
-        create: {
-          title: 'Check out Prisma with Next.js',
-          content: 'https://www.prisma.io/nextjs',
-          published: true,
-        },
-      },
+      }
     },
-  })
-  const bob = await prisma.user.upsert({
-    where: { email: 'bob@prisma.io' },
-    update: {},
-    create: {
-      email: 'bob@prisma.io',
-      name: 'Bob',
-      posts: {
-        create: [
+    {
+      firstname:'Leonardo Daniel',
+      lastname:'Cardona Camacho',
+      email:'leonardocardona@gmail.com',
+      ci : '3453453',
+      student:{
+        create:
           {
-            title: 'Follow Prisma on Twitter',
-            content: 'https://twitter.com/prisma',
-            published: true,
-          },
-          {
-            title: 'Follow Nexus on Twitter',
-            content: 'https://twitter.com/nexusgql',
-            published: true,
-          },
-        ],
-      },
+            codSis: "2017887342",
+          }
+      }
     },
-  })
-  console.log({ alice, bob })
+  ]
+
+  await Promise.all(
+    users.map(async (user) => {
+      await prisma.user.create({
+        data: user,
+      })
+    })
+  )
 }
 
 main()
-    .then(async () => {
-        await prisma.$disconnect()
-    })
-    .catch(async (e) => {
-        console.error(e)
-        await prisma.$disconnect()
-        process.exit(1)
-    })
+  .then(async () => {
+    await prisma.$disconnect()
+  })
+  .catch(async (e) => {
+    console.error(e)
+    await prisma.$disconnect()
+    process.exit(1)
+  })
