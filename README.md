@@ -31,4 +31,5 @@ Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/ver
 ```
 npm install prisma --save-dev
 npx prisma migrate dev --name <title_migration> // to do migrations
+npx prisma db seed // to insert values from code to db
 ```

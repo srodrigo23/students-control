@@ -37,47 +37,47 @@ declare module "next-auth" {
  * @see https://next-auth.js.org/configuration/options
  */
 export const authOptions: NextAuthOptions = {
-  // callbacks: {
-  //   session: ({ session, user }) => ({
-  //     ...session,
-  //     user: {
-  //       ...session.user,
-  //       id: user.id,
-  //     },
-  //   }),
-  // },
   callbacks: {
-    /*
+    session: ({ session, user }) => ({
+      ...session,
+      user: {
+        ...session.user,
+        id: user.id,
+      },
+    }),
+  },
+  // callbacks: {
+     /*
      * While using `jwt` as a strategy, `jwt()` callback will be called before
      * the `session()` callback. So we have to add custom parameters in `token`
      * via `jwt()` callback to make them accessible in the `session()` callback
      */
     
-      async session({ session, token, user }) {
-        session.jwt = token.jwt;
-        session.id = token.id;
-        return session;
-      },
-      async jwt({ token, user, account }) {
-        if (user) {
-          if (account.provider !== 'credentials') {
-            const response = await fetch(
-              `${env.NEXTAUTH_URL}/api/auth/${account.provider}/callback?access_token=${account?.access_token}`
-            );
-            const data = await response.json();
+    //   async session({ session, token, user }) {
+    //     session.jwt = token.jwt;
+    //     session.id = token.id;
+    //     return session;
+    //   },
+    //   async jwt({ token, user, account }) {
+    //     if (user) {
+    //       if (account.provider !== 'credentials') {
+    //         const response = await fetch(
+    //           `${env.NEXTAUTH_URL}/api/auth/${account.provider}/callback?access_token=${account?.access_token}`
+    //         );
+    //         const data = await response.json();
   
-            token.jwt = data.jwt;
-            token.id = data.user.id;
-          } else {
-            token.jwt = user.jwt;
-            token.id = user.user.id;
-          }
-        }
+    //         token.jwt = data.jwt;
+    //         token.id = data.user.id;
+    //       } else {
+    //         token.jwt = user.jwt;
+    //         token.id = user.user.id;
+    //       }
+    //     }
   
-        return token;
-    },
+    //     return token;
+    // },
 
-  },
+  // },
   adapter: PrismaAdapter(prisma),
   providers: [
     DiscordProvider({

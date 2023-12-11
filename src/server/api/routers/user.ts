@@ -15,7 +15,11 @@ export const userRouter = createTRPCRouter({
     }),
 
   getAll: publicProcedure.query(({ ctx }) => {
-    return ctx.prisma.user.findMany(  {where: { name: 'SERGIO CARDENAS' }});
+    return ctx.prisma.user.findMany({
+      include: {
+        student: true, // Return all fields
+      },
+    });
   }),
 
   getSecretMessage: protectedProcedure.query(() => {

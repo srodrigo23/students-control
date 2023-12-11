@@ -1,4 +1,6 @@
 import * as React from 'react'
+import { api } from "~/utils/api";
+import { useEffect, useState } from 'react';
 // import ReactDOM from 'react-dom/client'
 // import './index.css'
 
@@ -10,41 +12,38 @@ import {
 } from '@tanstack/react-table'
 
 type Student = {
-  firstName: string
-  lastName: string
-  codSis: string
+  firstname: string
+  lastname: string  
   ci:string
-  // age: number
-  // visits: number
-  // status: string
-  // progress: number
+  codsis:string|undefined
 }
 
-const defaultData: Student[] = [
-  {
-    firstName: 'tanner',
-    lastName: 'linsley',
-    codSis: '20234234',
-    ci: '345452',
-  },
-  {
-    firstName: 'tandy',
-    lastName: 'miller',
-    codSis: '20234234',
-    ci: '20234234',
-  },
-  {
-    firstName: 'joe',
-    lastName: 'dirte',
-    codSis: '20234234',
-    ci: '20234234',
-  },
-]
+
+// const defaultData: Student[] = [
+//   {
+//     firstName: 'tanner',
+//     lastName: 'linsley',
+//     codSis: '20234234',
+//     ci: '345452',
+//   },
+//   {
+//     firstName: 'tandy',
+//     lastName: 'miller',
+//     codSis: '20234234',
+//     ci: '20234234',
+//   },
+//   {
+//     firstName: 'joe',
+//     lastName: 'dirte',
+//     codSis: '20234234',
+//     ci: '20234234',
+//   },
+// ]
 
 const columnHelper = createColumnHelper<Student>()
 
 const columns = [
-  columnHelper.accessor('firstName', {
+  columnHelper.accessor('firstname', {
     header: () => 'Fist Name',
     cell: info => info.getValue(),
     footer: info => info.column.id,
@@ -55,12 +54,12 @@ const columns = [
   //   header: () => <span>Last Name</span>,
   //   footer: info => info.column.id,
   // }),
-  columnHelper.accessor('lastName', {
+  columnHelper.accessor('lastname', {
     header: () => 'Last Name',
     cell: info => info.getValue(),
     footer: info => info.column.id,
   }),
-  columnHelper.accessor('codSis', {
+  columnHelper.accessor('codsis', {
     header: () => 'CodSis',
     cell: info => info.renderValue(),
     footer: info => info.column.id,
@@ -85,8 +84,43 @@ const columns = [
 ]
 
 const StudentsTable = ()=>{
-  const [data, setData] = React.useState(() => [...defaultData])
+  
+  const [data, setData] = useState<Student[]>(() => [])
   const rerender = React.useReducer(() => ({}), {})[1]
+  
+  const {data:userData, isLoading} = api.user.getAll.useQuery();
+  const defaultData: Student[] = []
+
+  useEffect(() => {
+    userData?.map((userdata: {
+      student: {
+          id: number;
+          userId: string;
+          codSis: string;
+          createdAt: Date;
+          updatedAt: Date;
+      } | null;
+  } & {
+      id: string;
+      firstname: string;
+      lastname: string;
+      ci: string;
+      email: string | null;
+      image: string | null;
+      createdAt: Date;
+      updatedAt: Date;
+  })=>{
+      defaultData.push(
+        {
+          firstname: userdata['firstname'],
+          lastname: userdata['lastname'],
+          ci:userdata['ci'],
+          codsis:userdata?.student?.codSis,
+        }
+      )
+    })
+    setData(defaultData)
+  })
 
   const table = useReactTable({
     data,
@@ -94,10 +128,10 @@ const StudentsTable = ()=>{
     getCoreRowModel: getCoreRowModel(),
   })
 
+  if (isLoading || !userData) return <div>Loading...</div>  
+  console.log(userData)
   return (
-    <div 
-    className="h-full w-full overflow-scroll pl-4 pr-4"
-    >
+    <div className="h-full w-full overflow-scroll pl-4 pr-4">
       <table className="w-full min-w-max table-auto text-left">
         <thead>
           {table.getHeaderGroups().map(headerGroup => (

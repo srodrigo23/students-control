@@ -12,7 +12,7 @@ const Login = () => {
         <div>
             <h1> hi {data.user.name}</h1>
             {/* <img src={data.user.image} alt={data.user.name + ' photo'} /> */}
-            <button onClick={signOut}>sign out</button>
+            <button>sign out</button>
         </div>
         );
     }
