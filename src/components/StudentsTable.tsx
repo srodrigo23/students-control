@@ -89,9 +89,8 @@ const StudentsTable = ()=>{
   const rerender = React.useReducer(() => ({}), {})[1]
   
   const {data:userData, isLoading} = api.user.getAll.useQuery();
-  const defaultData: Student[] = []
-
   useEffect(() => {
+    const defaultData: Student[] = []
     userData?.map((userdata: {
       student: {
           id: number;
@@ -120,7 +119,7 @@ const StudentsTable = ()=>{
       )
     })
     setData(defaultData)
-  })
+  },[userData])
 
   const table = useReactTable({
     data,
