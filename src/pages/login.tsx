@@ -18,7 +18,7 @@ const Login = () => {
     }
     return (
         <div>
-            <button onClick={() => signIn('google')}>sign in with gooogle</button>
+            {/* <button onClick={() => signIn('google')}>sign in with gooogle</button> */}
         </div>
     );
     // return(
