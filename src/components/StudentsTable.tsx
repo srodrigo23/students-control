@@ -1,9 +1,6 @@
 import * as React from 'react'
 import { api } from "~/utils/api";
 import { useEffect, useState } from 'react';
-// import ReactDOM from 'react-dom/client'
-// import './index.css'
-
 import {
   createColumnHelper,
   flexRender,
@@ -17,28 +14,6 @@ type Student = {
   ci:string
   codsis:string|undefined
 }
-
-
-// const defaultData: Student[] = [
-//   {
-//     firstName: 'tanner',
-//     lastName: 'linsley',
-//     codSis: '20234234',
-//     ci: '345452',
-//   },
-//   {
-//     firstName: 'tandy',
-//     lastName: 'miller',
-//     codSis: '20234234',
-//     ci: '20234234',
-//   },
-//   {
-//     firstName: 'joe',
-//     lastName: 'dirte',
-//     codSis: '20234234',
-//     ci: '20234234',
-//   },
-// ]
 
 const columnHelper = createColumnHelper<Student>()
 

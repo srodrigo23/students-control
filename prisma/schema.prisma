@@ -79,17 +79,30 @@ model User {
 
 model Student {
   id        Int      @id @default(autoincrement())
-  userId    String   @unique
   codSis    String   @default("200000000")
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  userId    String   @unique
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  careerId  Int      @unique 
+  career    Career   @relation(fields: [careerId], references: [id], onDelete: Cascade)
+}
+
+model Career {
+  id        Int      @id @default(autoincrement())  
+  title     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  student   Student?
 }
 
 // model VerificationToken {
 //   identifier String
 //   token      String   @unique
 //   expires    DateTime
-
 //   @@unique([identifier, token])
 // }
