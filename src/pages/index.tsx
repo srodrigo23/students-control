@@ -7,6 +7,8 @@ import { api } from "~/utils/api";
 import Modal from '@mui/material/Modal';
 import FormAddStudent from "~/components/FormAddStudent";
 import StudentsTable from "~/components/StudentsTable";
+import NavBar from "~/components/NavBar";
+import Container from "~/components/Container";
 
 const Home: NextPage = () => {
   // const hello = api.example.hello.useQuery({ text: "from tRPC" });
@@ -17,13 +19,14 @@ const Home: NextPage = () => {
   const handleClose = () => setOpen(false);
 
   return (
-    <div>
+    <Container>
       <Head>
         <title>Students Control</title>
         <meta name="description" content="Students Control" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="flex min-h-screen flex-col items-center justify-center">
+      
+      {/* <div className="flex min-h-screen flex-col items-center justify-center">
           <h1 className="text-4xl pb-6">Computación 1</h1>
           <button onClick={handleOpen}>Add Student</button>
           <Modal
@@ -35,8 +38,8 @@ const Home: NextPage = () => {
             <FormAddStudent/>
           </Modal>
           <StudentsTable/>
-      </div>
-    </div>
+      </div> */}
+    </Container>
   );
 };
 export default Home;

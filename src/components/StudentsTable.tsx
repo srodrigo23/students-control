@@ -13,6 +13,7 @@ type Student = {
   lastname: string  
   ci:string
   codsis:string|undefined
+  career: string
 }
 
 const columnHelper = createColumnHelper<Student>()
@@ -44,6 +45,11 @@ const columns = [
     cell: info => info.renderValue(),
     footer: info => info.column.id,
   }),
+  columnHelper.accessor('career', {
+    header: () => 'Career',
+    cell: info => info.renderValue(),
+    footer: info => info.column.id,
+  }),
   // columnHelper.accessor('visits', {
   //   header: () => <span>Visits</span>,
   //   footer: info => info.column.id,
@@ -64,37 +70,40 @@ const StudentsTable = ()=>{
   const rerender = React.useReducer(() => ({}), {})[1]
   
   const {data:userData, isLoading} = api.user.getAll.useQuery();
+  const {data:careerData} = api.career.getAll.useQuery();
+
   useEffect(() => {
+    
     const defaultData: Student[] = []
-    userData?.map((userdata: {
-      student: {
-          id: number;
-          userId: string;
-          codSis: string;
-          createdAt: Date;
-          updatedAt: Date;
-      } | null;
-  } & {
-      id: string;
-      firstname: string;
-      lastname: string;
-      ci: string;
-      email: string | null;
-      image: string | null;
-      createdAt: Date;
-      updatedAt: Date;
-  })=>{
-      defaultData.push(
-        {
-          firstname: userdata['firstname'],
-          lastname: userdata['lastname'],
-          ci:userdata['ci'],
-          codsis:userdata?.student?.codSis,
-        }
-      )
-    })
+
+    if(careerData){
+      userData?.map((userdata: {
+        id: string;
+        firstname: string;
+        lastname: string;
+        ci: string;
+        email: string | null;
+        image: string | null;
+        createdAt: Date;
+        updatedAt: Date;
+      })=>{
+        defaultData.push(
+          {
+            firstname: userdata['firstname'],
+            lastname: userdata['lastname'],
+            ci:userdata['ci'],
+            codsis:userdata?.student?.codSis,
+            // inventory.find(({ name }) => name === "cherries");
+            career:careerData?.find(({codCareer})=>{ codCareer === userdata.student.careerId })?.title
+            // career:userdata?.student?.careerId
+          }
+        )
+      })
+    }
+
+    console.log(defaultData, 'ans')
     setData(defaultData)
-  },[userData])
+  },[userData, careerData])
 
   const table = useReactTable({
     data,
@@ -102,7 +111,7 @@ const StudentsTable = ()=>{
     getCoreRowModel: getCoreRowModel(),
   })
 
-  if (isLoading || !userData) return <div>Loading...</div>  
+  if ((isLoading)|| !userData) return <div>Loading...</div>  
   console.log(userData)
   return (
     <div className="h-full w-full overflow-scroll pl-4 pr-4">
