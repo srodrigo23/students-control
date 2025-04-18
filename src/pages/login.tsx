@@ -7,7 +7,9 @@ const Login = () => {
     const { data, status } = useSession();
 
     if (status === 'loading') return <h1> loading... please wait</h1>;
+
     if (status === 'authenticated') {
+
         return (    
         <div>
             <h1> hi {data.user.name}</h1>
@@ -17,7 +19,8 @@ const Login = () => {
         );
     }
     return (
-        <div>
+
+        <div className="size-40">
             <button onClick={() => signIn('google')}>sign in with gooogle</button>
         </div>
     );

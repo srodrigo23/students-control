@@ -7,4 +7,4 @@ const Careers = () =>{
     <h1>This is Careers page</h1>
   </Container>)
 }
-export default Careers
+export default Careers;

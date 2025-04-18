@@ -26,7 +26,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       
-      {/* <div className="flex min-h-screen flex-col items-center justify-center">
+      <div className="flex min-h-screen flex-col items-center justify-center">
           <h1 className="text-4xl pb-6">Computación 1</h1>
           <button onClick={handleOpen}>Add Student</button>
           <Modal
@@ -38,7 +38,7 @@ const Home: NextPage = () => {
             <FormAddStudent/>
           </Modal>
           <StudentsTable/>
-      </div> */}
+      </div>
     </Container>
   );
 };
